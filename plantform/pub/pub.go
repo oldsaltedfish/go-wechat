@@ -89,7 +89,7 @@ func (c *Client) CheckSignature(signature string, timestamp string, nonce string
 	}
 }
 
-func (c *Client) Receive(xmlData []byte) (*ReceiveMsg, error) {
+func (c *Client) UnmarshallReceiveMsg(xmlData []byte) (*ReceiveMsg, error) {
 	msg := new(ReceiveMsg)
 	err := xml.Unmarshal(xmlData, msg)
 	if err != nil {
@@ -98,7 +98,7 @@ func (c *Client) Receive(xmlData []byte) (*ReceiveMsg, error) {
 	return msg, nil
 }
 
-func (c *Client) SendTxt(msg *SendMsg) ([]byte, error) {
+func (c *Client) MarshallSendMsg(msg *SendMsg) ([]byte, error) {
 	xmlData, err := xml.Marshal(msg)
 	if err != nil {
 		return nil, err
