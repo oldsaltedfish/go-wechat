@@ -2,6 +2,8 @@ package pub
 
 import (
 	"context"
+	"crypto/sha1"
+	"encoding/hex"
 	"encoding/json"
 	"encoding/xml"
 	"github.com/oldsaltedfish/go-wechat/cache"
@@ -74,15 +76,19 @@ func (c *Client) CheckSignature(signature string, timestamp string, nonce string
 	if c.config == nil {
 		panic("wechat public account config is nil")
 	}
-	tmpArr := []string{signature, timestamp, nonce}
+	tmpArr := []string{c.config.Token, timestamp, nonce}
 	sort.Slice(tmpArr, func(i, j int) bool {
-		return i > j
+
+		return tmpArr[i] < tmpArr[j]
 	})
 	var tmpStr string
 	for _, item := range tmpArr {
 		tmpStr += item
 	}
-	if signature == tmpStr {
+	h := sha1.New()
+	h.Write([]byte(tmpStr))
+	newSignature := hex.EncodeToString(h.Sum(nil))
+	if signature == newSignature {
 		return true
 	} else {
 		return false
