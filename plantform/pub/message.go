@@ -50,13 +50,13 @@ type MediaId struct {
 }
 
 type ReplyMsg struct {
-	ToUserName   CDATA     `xml:"ToUserName"`
-	FromUserName CDATA     `xml:"FromUserName"`
-	CreateTime   uint64    `xml:"CreateTime"`
-	MsgType      CDATA     `xml:"MsgType"`
-	Content      string    `xml:"Content"`
-	Image        []MediaId `xml:"Image"`
-	Voice        []MediaId `xml:"Voice"`
+	ToUserName   CDATA        `xml:"ToUserName"`
+	FromUserName CDATA        `xml:"FromUserName"`
+	CreateTime   uint64       `xml:"CreateTime"`
+	MsgType      ReplyMsgType `xml:"MsgType"`
+	Content      string       `xml:"Content"`
+	Image        []MediaId    `xml:"Image"`
+	Voice        []MediaId    `xml:"Voice"`
 }
 
 //
